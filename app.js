@@ -1,5 +1,5 @@
 //jshint esversion:6
-
+require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
@@ -27,13 +27,10 @@ app.use(express.static("public"));
 
 //+++++++++++Create & Connect new Database named blogDB++++++++++++++
 
-mongoose.connect(
-  "mongodb+srv://admin-arthur:711067a711067a@cluster0.iwbim.mongodb.net/blogAppDB",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-);
+mongoose.connect(process.env.MONGODB_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 mongoose.set("useFindAndModify", false);
 
@@ -51,9 +48,9 @@ app.get("/", function (req, res) {
         homeStartingContent: homeStartingContent,
         posts: foundPosts,
       });
-      console.log(foundPosts);
+      foundPosts;
     } else {
-      console.log(err);
+      err;
     }
   });
 });
@@ -104,11 +101,11 @@ app.get("/posts/:postId", function (req, res) {
         res.redirect("/");
       }
     } else {
-      console.log(err);
+      err;
     }
   });
 });
 
 app.listen(process.env.PORT || 3000, function () {
-  console.log("Server started on port 3000");
+  ("Server started on port 3000");
 });
